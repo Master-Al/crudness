@@ -42,8 +42,11 @@ namespace coreproj.Controllers
                     persons.Add(person);
                 }
                 reader.Close();
+
             }
                 return View(persons);
+
+
         }
 
         public IActionResult Privacy()
@@ -55,6 +58,44 @@ namespace coreproj.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public ActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(Person _person)
+        {
+            MySqlConnection conn = new MySqlConnection("Server=alpandisdemoserver.mysql.database.azure.com; Port=3306; Database=crud; Uid=alpandis@alpandisdemoserver; Pwd=FafaAl22; SslMode=Preferred;");
+            if (ModelState.IsValid)
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("Insert into student (Name,Address,Mobile,Email ) values (@Name,@Address,@Mobile,@Email)", conn);
+                cmd.Parameters.AddWithValue("@Name", _person.Name);
+                cmd.Parameters.AddWithValue("@Address", _person.Address);
+                cmd.Parameters.AddWithValue("@Mobile", _person.Mobile);
+                cmd.Parameters.AddWithValue("@Email", _person.Email);
+                cmd.ExecuteNonQuery();
+                cmd.Dispose();
+                conn.Close();
+                return RedirectToAction("Index");
+            }
+            return View(_person);
+        }
+        public ActionResult Update(int? id)
+        {
+            MySqlConnection conn = new MySqlConnection("Server=alpandisdemoserver.mysql.database.azure.com; Port=3306; Database=crud; Uid=alpandis@alpandisdemoserver; Pwd=FafaAl22; SslMode=Preferred;");
+
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            return View();
+        }
+
+            private ActionResult HttpNotFound()
+        {
+            throw new NotImplementedException();
         }
     }
 }

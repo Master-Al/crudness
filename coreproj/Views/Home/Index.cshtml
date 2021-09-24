@@ -7,9 +7,7 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
-<h2>Add</h2>
-
-
+<h2>@Html.ActionLink("Add New Data","Create")</h2>
 <h2>Persons</h2>
 <table class="table table-bordered">
     <thead>
@@ -49,6 +47,12 @@
             </td>
             <td>
                 @item.Mobile
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Update", new { id= item.SID })
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { id = item.SID })
             </td>
         </tr>
         }
