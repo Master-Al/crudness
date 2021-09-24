@@ -84,8 +84,6 @@ namespace coreproj.Controllers
         }
         public ActionResult Update(int? id)
         {
-            MySqlConnection conn = new MySqlConnection("Server=alpandisdemoserver.mysql.database.azure.com; Port=3306; Database=crud; Uid=alpandis@alpandisdemoserver; Pwd=FafaAl22; SslMode=Preferred;");
-
             if (id == null)
             {
                 return HttpNotFound();
